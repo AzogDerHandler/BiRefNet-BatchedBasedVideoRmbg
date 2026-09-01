@@ -1,0 +1,22 @@
+[project]
+name = "birefnet-batchedbasedvideormbg"
+description = "Standalone ComfyUI node: BiRefNet background removal for video/frame batches, with a true batched GPU pipeline (chunked batch inference with VRAM-optimized auto batch sizing and OOM fallback, fp16/fp32, channels_last, local-model loading). Derived from the BiRefNet node of 1038lab/ComfyUI-RMBG; installs alongside it without node-key collisions."
+version = "1.0.0"
+license = { file = "LICENSE" }
+dependencies = [
+    "torch",
+    "numpy",
+    "Pillow",
+    "opencv-python>=4.7.0",
+    "huggingface-hub>=0.19.0",
+    "safetensors>=0.4.0",
+]
+
+[project.urls]
+# Update this to your own repository before publishing.
+Repository = "https://github.com/your-org/BiRefNet-BatchedBasedVideoRmbg"
+
+[tool.comfy]
+# Set to your own ComfyUI Registry publisher id before publishing.
+PublisherId = "your-publisher-id"
+DisplayName = "BiRefNet-BatchedBasedVideoRmbg"
