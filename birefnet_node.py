@@ -571,6 +571,13 @@ def birefnet_batch_infer(model, images_bhwc, device, input_size,
                                          remaining * out_bytes_per_frame, remaining)
                 planned = True
 
+    # The non_blocking device->host copies above land in pinned host buffers
+    # asynchronously; the host must wait for them before reading (torch.cat).
+    # Earlier chunks get flushed incidentally by the next chunk's upload, but the
+    # last one doesn't -- without this its masks come out as zeros.
+    if _is_cuda_device(device) and out_device.type == "cpu":
+        torch.cuda.synchronize(device)
+
     return torch.cat(out, dim=0)                              # [B,H,W] on out_device
 
 # ---------------------------------------------------------------------------
